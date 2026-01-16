@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carmen Silfa | Asesoría Inmobiliaria</title>
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <iframe id="as-frame" src="">Cargando...</iframe>
+
+    <script>
+        // 1. REEMPLAZA ESTO CON TU URL DE IMPLEMENTACIÓN DE GOOGLE
+        const GAS_URL = "https://script.google.com/macros/s/TU_ID_AQUI/exec";
+
+        // 2. Esta función captura los parámetros de la URL actual (?page=x&id=y)
+        // y los añade a la URL del iframe de Google
+        function loadIframe() {
+            const queryString = window.location.search;
+            const finalUrl = GAS_URL + queryString;
+            document.getElementById('as-frame').src = finalUrl;
+        }
+
+        // Ejecutar al cargar la página
+        window.onload = loadIframe;
+    </script>
+
+</body>
+</html>
