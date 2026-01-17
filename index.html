@@ -299,22 +299,59 @@ html { scroll-behavior: smooth; }
 
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbwZFKwlfCtEuqL9VIX-iAhtrXvCiYlCY34r8TotSQvpbmcJpCrh1hE29sTCB1dGD7c/exec';
+// ⬇️ AGREGAR ESTO AQUÍ ⬇️
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
 
+function getCachedData(key) {
+  const cached = localStorage.getItem(key);
+  if (!cached) return null;
+  
+  const data = JSON.parse(cached);
+  const now = Date.now();
+  
+  if (now - data.timestamp > CACHE_TTL) {
+    localStorage.removeItem(key);
+    return null;
+  }
+  
+  return data.value;
+}
+
+function setCachedData(key, value) {
+  const data = {
+    value: value,
+    timestamp: Date.now()
+  };
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function fetchWithCache(url, cacheKey) {
+  const cached = getCachedData(cacheKey);
+  if (cached) {
+    return Promise.resolve({ success: true, data: cached });
+  }
+  
+  return fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        setCachedData(cacheKey, data.data);
+      }
+      return data;
+    });
+}
 // Cargar datos iniciales
-fetch(`${API_URL}?path=estadisticas`)
-  .then(r => r.json())
+// Cargar datos iniciales CON CACHÉ
+fetchWithCache(`${API_URL}?path=estadisticas`, 'estadisticas')
   .then(data => cargarEstadisticas(data.data));
 
-fetch(`${API_URL}?path=propiedades/vendidas`)
-  .then(r => r.json())
+fetchWithCache(`${API_URL}?path=propiedades/vendidas`, 'vendidas')
   .then(data => cargarCasosExito(data.data));
 
-fetch(`${API_URL}?path=propiedades/venta`)
-  .then(r => r.json())
+fetchWithCache(`${API_URL}?path=propiedades/venta`, 'venta')
   .then(data => cargarPropiedadesVenta(data.data));
 
-fetch(`${API_URL}?path=config/agente`)
-  .then(r => r.json())
+fetchWithCache(`${API_URL}?path=config/agente`, 'agente')
   .then(data => cargarDatosAgente(data.data));
 
 function cargarDatosAgente(agente) {
