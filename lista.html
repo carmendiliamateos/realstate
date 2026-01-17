@@ -104,7 +104,7 @@ html { scroll-behavior: smooth; }
 
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbwZFKwlfCtEuqL9VIX-iAhtrXvCiYlCY34r8TotSQvpbmcJpCrh1hE29sTCB1dGD7c/exec';
-// Funciones de caché
+
 const CACHE_TTL = 5 * 60 * 1000;
 
 function getCachedData(key) {
@@ -145,6 +145,7 @@ function fetchWithCache(url, cacheKey) {
       return data;
     });
 }
+
 fetchWithCache(`${API_URL}?path=propiedades/venta`, 'venta')
   .then(data => cargarPropiedades(data.data))
   .catch(error => {
@@ -161,7 +162,7 @@ function cargarPropiedades(props) {
   document.getElementById('propiedades').innerHTML = props.map(p => `
     <div class="group bg-white dark:bg-surface-dark rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 dark:border-white/5 hover:scale-[1.01] transition-transform cursor-pointer" onclick="verDetalle(${p.id})">
       <div class="relative h-72 w-full overflow-hidden">
-        <img alt="${p.titulo}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${p.imagen1 || 'https://via.placeholder.com/800x600'}"/>
+        <img alt="${p.titulo}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${p.imagen1 || 'https://via.placeholder.com/800x600'}"/>
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10"></div>
         <div class="absolute bottom-5 left-5">
           <div class="bg-primary/95 backdrop-blur-md text-white font-display font-bold text-xl px-4 py-2 rounded-xl shadow-lg border border-white/20">
