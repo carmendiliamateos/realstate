@@ -60,6 +60,54 @@ html { scroll-behavior: smooth; }
 }
 
 .loading-active { pointer-events: none; opacity: 0.7; }
+  /* Skeleton Loader */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-text {
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.skeleton-title {
+  height: 32px;
+  width: 60%;
+  margin-bottom: 16px;
+}
+
+.skeleton-card {
+  height: 400px;
+  border-radius: 2rem;
+}
+
+/* Fade-in suave */
+.fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ocultar hasta cargar */
+.hidden-until-loaded {
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+}
+
+.loaded {
+  opacity: 1;
+}
 </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-secondary dark:text-gray-100 font-sans transition-colors duration-300">
@@ -111,15 +159,21 @@ html { scroll-behavior: smooth; }
 <section class="py-8 md:py-12 px-6 bg-surface-light dark:bg-surface-dark/30 border-y border-gray-100 dark:border-white/5">
   <div class="grid grid-cols-3 gap-2 md:gap-4 max-w-lg mx-auto text-center divide-x divide-gray-200 dark:divide-white/10">
     <div class="flex flex-col items-center">
-      <span class="text-primary font-display text-2xl md:text-3xl font-bold mb-1" id="totalVendido">$0</span>
+      <span class="text-primary font-display text-2xl md:text-3xl font-bold mb-1 hidden-until-loaded" id="totalVendido">
+        <span class="skeleton skeleton-text w-20 inline-block"></span>
+      </span>
       <span class="text-[10px] md:text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Vendido</span>
     </div>
     <div class="flex flex-col items-center">
-      <span class="text-primary font-display text-2xl md:text-3xl font-bold mb-1" id="anosExperiencia">0</span>
+      <span class="text-primary font-display text-2xl md:text-3xl font-bold mb-1 hidden-until-loaded" id="anosExperiencia">
+        <span class="skeleton skeleton-text w-12 inline-block"></span>
+      </span>
       <span class="text-[10px] md:text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Años</span>
     </div>
     <div class="flex flex-col items-center">
-      <span class="text-primary font-display text-2xl md:text-3xl font-bold mb-1" id="clientesFelices">0</span>
+      <span class="text-primary font-display text-2xl md:text-3xl font-bold mb-1 hidden-until-loaded" id="clientesFelices">
+        <span class="skeleton skeleton-text w-16 inline-block"></span>
+      </span>
       <span class="text-[10px] md:text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Familias Felices</span>
     </div>
   </div>
@@ -153,13 +207,25 @@ html { scroll-behavior: smooth; }
       </div>
       <a href="lista.html" class="text-xs md:text-sm font-semibold text-secondary dark:text-gray-300 border-b border-primary pb-0.5">Ver Todo</a>
     </div>
-    <div class="overflow-x-auto md:overflow-visible no-scrollbar pb-8 flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 snap-x snap-mandatory md:snap-none" id="casosExito"></div>
+    <div class="overflow-x-auto md:overflow-visible no-scrollbar pb-8 flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 snap-x snap-mandatory md:snap-none" id="casosExito">
+      <!-- Skeleton Loaders -->
+      <div class="snap-center shrink-0 md:shrink w-[85vw] sm:w-[70vw] md:w-auto skeleton skeleton-card"></div>
+      <div class="snap-center shrink-0 md:shrink w-[85vw] sm:w-[70vw] md:w-auto skeleton skeleton-card hidden md:block"></div>
+      <div class="snap-center shrink-0 md:shrink w-[85vw] sm:w-[70vw] md:w-auto skeleton skeleton-card hidden lg:block"></div>
+      <div class="snap-center shrink-0 md:shrink w-[85vw] sm:w-[70vw] md:w-auto skeleton skeleton-card hidden lg:block"></div>
+    </div>
   </div>
 </section>
 
 <section class="py-12 md:py-20 px-6 max-w-7xl mx-auto">
   <h2 class="font-display text-2xl md:text-3xl text-secondary dark:text-white mb-6 md:mb-10">Propiedades Disponibles</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="propiedadesVenta"></div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="propiedadesVenta">
+    <!-- Skeleton Loaders -->
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card hidden md:block"></div>
+    <div class="skeleton skeleton-card hidden lg:block"></div>
+    <div class="skeleton skeleton-card hidden lg:block"></div>
+  </div>
 </section>
 
 <section class="py-16 md:py-24 px-6 relative overflow-hidden bg-secondary dark:bg-black" id="contact">
@@ -268,9 +334,21 @@ function cargarDatosAgente(agente) {
 
 function cargarEstadisticas(stats) {
   if (!stats) return;
-  document.getElementById('totalVendido').textContent = '$' + (stats.total_vendido/1000000).toFixed(1) + 'M';
-  document.getElementById('anosExperiencia').textContent = stats.anos_experiencia;
-  document.getElementById('clientesFelices').textContent = stats.clientes_felices + '+';
+  
+  const totalVendido = document.getElementById('totalVendido');
+  const anosExp = document.getElementById('anosExperiencia');
+  const clientes = document.getElementById('clientesFelices');
+  
+  totalVendido.innerHTML = '$' + (stats.total_vendido/1000000).toFixed(1) + 'M';
+  anosExp.innerHTML = stats.anos_experiencia;
+  clientes.innerHTML = stats.clientes_felices + '+';
+  
+  // Activar fade-in
+  setTimeout(() => {
+    totalVendido.classList.add('loaded');
+    anosExp.classList.add('loaded');
+    clientes.classList.add('loaded');
+  }, 100);
 }
 
 function cargarCasosExito(propiedades) {
@@ -280,9 +358,9 @@ function cargarCasosExito(propiedades) {
   }
   const container = document.getElementById('casosExito');
   container.innerHTML = propiedades.map(p => `
-    <div class="snap-center shrink-0 md:shrink w-[85vw] sm:w-[70vw] md:w-auto group relative rounded-2xl overflow-hidden shadow-xl shadow-gray-200/50 dark:shadow-black/40 cursor-pointer" onclick="verDetalle(${p.id})">
+    <div class="snap-center shrink-0 md:shrink w-[85vw] sm:w-[70vw] md:w-auto group relative rounded-2xl overflow-hidden shadow-xl shadow-gray-200/50 dark:shadow-black/40 cursor-pointer fade-in" onclick="verDetalle(${p.id})">
       <div class="relative h-80 md:h-96">
-        <img alt="${p.titulo}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${p.imagen1 || 'https://via.placeholder.com/800x600'}"/>
+        <img alt="${p.titulo}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${p.imagen1 || 'https://via.placeholder.com/800x600'}"/>
         <div class="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/20 to-transparent dark:from-background-dark/95"></div>
         <div class="absolute top-8 right-6 transform -rotate-12 scale-125 z-20 pointer-events-none mix-blend-hard-light opacity-90">
           <div class="border-[5px] border-red-600/80 px-5 py-1 rounded-sm" style="border-style: dashed;">
@@ -310,9 +388,9 @@ function cargarPropiedadesVenta(props) {
     return;
   }
   container.innerHTML = props.map(p => `
-    <div class="group relative bg-white dark:bg-surface-dark rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 dark:border-white/5 cursor-pointer transition-all hover:shadow-2xl" onclick="verDetalle(${p.id})">
+    <div class="group relative bg-white dark:bg-surface-dark rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 dark:border-white/5 cursor-pointer transition-all hover:shadow-2xl fade-in" onclick="verDetalle(${p.id})">
       <div class="relative h-64 w-full overflow-hidden">
-        <img alt="${p.titulo}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${p.imagen1 || 'https://via.placeholder.com/800x600'}"/>
+        <img alt="${p.titulo}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${p.imagen1 || 'https://via.placeholder.com/800x600'}"/>
         <div class="absolute top-6 left-6 transform -rotate-12 scale-100 z-20 pointer-events-none mix-blend-multiply opacity-80">
           <div class="border-[3px] border-green-600/70 px-4 py-1 rounded-sm" style="border-style: dashed;">
             <span class="text-green-600/90 font-black text-xl tracking-tighter uppercase" style="font-family: 'Montserrat', sans-serif; text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05);">Disponible</span>
