@@ -290,35 +290,73 @@
   }
 
   function editarPropiedad(id) {
-    fetch(`${API_URL}?path=propiedades/detalle&id=${id}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.success) {
-          const p = data.data;
-          modoEdicion = true;
-          
-          document.getElementById('propiedadId').value = id;
-          document.querySelector('[name="titulo"]').value = p.titulo;
-          document.querySelector('[name="ubicacion"]').value = p.ubicacion;
-          document.querySelector('[name="precio"]').value = p.precio;
-          document.querySelector('[name="habitaciones"]').value = p.habitaciones;
-          document.querySelector('[name="banos"]').value = p.banos;
-          document.querySelector('[name="metros"]').value = p.metrosCuadrados;
-          document.querySelector('[name="descripcion"]').value = p.descripcion;
-          document.querySelector('[name="estado"]').value = p.estado;
-          
-          imagenesActuales = {
-            imagen1: p.imagen1,
-            imagen2: p.imagen2,
-            imagen3: p.imagen3,
-            imagen4: p.imagen4
-          };
-          
-          document.getElementById('textoBtn').textContent = 'Actualizar Inmueble';
-          cambiarTab('nueva');
+  const overlay = document.getElementById('loadingOverlay');
+  overlay.style.display = 'flex';
+  
+  fetch(`${API_URL}?path=propiedades/detalle&id=${id}`)
+    .then(r => r.json())
+    .then(data => {
+      overlay.style.display = 'none';
+      
+      console.log('Respuesta completa:', data);
+      
+      if (data.success) {
+        const p = data.data;
+        console.log('Datos de propiedad:', p);
+        
+        modoEdicion = true;
+        
+        document.getElementById('propiedadId').value = id;
+        document.querySelector('[name="titulo"]').value = p.titulo || '';
+        document.querySelector('[name="ubicacion"]').value = p.ubicacion || '';
+        document.querySelector('[name="precio"]').value = p.precio || '';
+        document.querySelector('[name="habitaciones"]').value = p.habitaciones || '';
+        document.querySelector('[name="banos"]').value = p.banos || '';
+        document.querySelector('[name="metros"]').value = p.metrosCuadrados || p.metros || '';
+        document.querySelector('[name="descripcion"]').value = p.descripcion || '';
+        document.querySelector('[name="estado"]').value = p.estado || 'EN_VENTA';
+        
+        imagenesActuales = {
+          imagen1: p.imagen1 || '',
+          imagen2: p.imagen2 || '',
+          imagen3: p.imagen3 || '',
+          imagen4: p.imagen4 || ''
+        };
+        
+        // Mostrar previews de imágenes existentes
+        if (p.imagen1) {
+          document.getElementById('label1').innerHTML = `<img src="${p.imagen1}" class="w-full h-full object-cover rounded-2xl border-2 border-black">`;
+          document.getElementById('label1').style.padding = "0";
+          document.getElementById('label1').style.borderStyle = "solid";
         }
-      });
-  }
+        if (p.imagen2) {
+          document.getElementById('label2').innerHTML = `<img src="${p.imagen2}" class="w-full h-full object-cover rounded-2xl border-2 border-black">`;
+          document.getElementById('label2').style.padding = "0";
+          document.getElementById('label2').style.borderStyle = "solid";
+        }
+        if (p.imagen3) {
+          document.getElementById('label3').innerHTML = `<img src="${p.imagen3}" class="w-full h-full object-cover rounded-2xl border-2 border-black">`;
+          document.getElementById('label3').style.padding = "0";
+          document.getElementById('label3').style.borderStyle = "solid";
+        }
+        if (p.imagen4) {
+          document.getElementById('label4').innerHTML = `<img src="${p.imagen4}" class="w-full h-full object-cover rounded-2xl border-2 border-black">`;
+          document.getElementById('label4').style.padding = "0";
+          document.getElementById('label4').style.borderStyle = "solid";
+        }
+        
+        document.getElementById('textoBtn').textContent = 'Actualizar Inmueble';
+        cambiarTab('nueva');
+      } else {
+        alert('Error: ' + (data.error || 'No se pudo cargar la propiedad'));
+      }
+    })
+    .catch(error => {
+      overlay.style.display = 'none';
+      console.error('Error completo:', error);
+      alert('Error de conexión: ' + error.message);
+    });
+}
 
   function abrirConfirmar(id) {
     propiedadAEliminar = id;
