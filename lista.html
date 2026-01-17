@@ -89,8 +89,7 @@ html { scroll-behavior: smooth; }
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbwZFKwlfCtEuqL9VIX-iAhtrXvCiYlCY34r8TotSQvpbmcJpCrh1hE29sTCB1dGD7c/exec';
 
-fetch(`${API_URL}?path=propiedades/venta`)
-  .then(r => r.json())
+fetchWithCache(`${API_URL}?path=propiedades/venta`, 'venta')
   .then(data => cargarPropiedades(data.data))
   .catch(error => {
     console.error('Error:', error);
