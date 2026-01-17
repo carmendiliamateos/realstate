@@ -26,24 +26,35 @@
     </style>
 </head>
 <body>
-
     <iframe id="as-frame" src="">Cargando...</iframe>
-
     <script>
-        // 1. REEMPLAZA ESTO CON TU URL DE IMPLEMENTACIÓN DE GOOGLE
         const GAS_URL = "https://script.google.com/macros/s/AKfycbwZFKwlfCtEuqL9VIX-iAhtrXvCiYlCY34r8TotSQvpbmcJpCrh1hE29sTCB1dGD7c/exec";
-
-        // 2. Esta función captura los parámetros de la URL actual (?page=x&id=y)
-        // y los añade a la URL del iframe de Google
-        function loadIframe() {
-            const queryString = window.location.search;
-            const finalUrl = GAS_URL + queryString;
+        
+        function updateIframe() {
+            const params = new URLSearchParams(window.location.search);
+            const hash = window.location.hash;
+            let finalUrl = GAS_URL;
+            
+            if (params.toString()) {
+                finalUrl += '?' + params.toString();
+            }
+            if (hash) {
+                finalUrl += hash;
+            }
+            
             document.getElementById('as-frame').src = finalUrl;
         }
 
-        // Ejecutar al cargar la página
-        window.onload = loadIframe;
+        window.addEventListener('popstate', updateIframe);
+        window.addEventListener('load', updateIframe);
+        
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.navigate) {
+                const newUrl = window.location.pathname + event.data.navigate;
+                window.history.pushState({}, '', newUrl);
+                updateIframe();
+            }
+        });
     </script>
-
 </body>
 </html>
