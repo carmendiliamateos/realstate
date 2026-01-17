@@ -233,24 +233,27 @@
     window.location.href = p;
   }
 
-  function cambiarTab(tab) {
-    document.getElementById('tabNueva').classList.remove('tab-active', 'text-gray-500');
-    document.getElementById('tabGestionar').classList.remove('tab-active', 'text-gray-500');
-    
-    if (tab === 'nueva') {
-      document.getElementById('tabNueva').classList.add('tab-active');
-      document.getElementById('tabGestionar').classList.add('text-gray-500');
-      document.getElementById('contenidoNueva').classList.remove('hidden');
-      document.getElementById('contenidoGestionar').classList.add('hidden');
+function cambiarTab(tab) {
+  document.getElementById('tabNueva').classList.remove('tab-active', 'text-gray-500');
+  document.getElementById('tabGestionar').classList.remove('tab-active', 'text-gray-500');
+  
+  if (tab === 'nueva') {
+    document.getElementById('tabNueva').classList.add('tab-active');
+    document.getElementById('tabGestionar').classList.add('text-gray-500');
+    document.getElementById('contenidoNueva').classList.remove('hidden');
+    document.getElementById('contenidoGestionar').classList.add('hidden');
+    // NO limpiamos si estamos en modo edición
+    if (!modoEdicion) {
       limpiarFormulario();
-    } else {
-      document.getElementById('tabGestionar').classList.add('tab-active');
-      document.getElementById('tabNueva').classList.add('text-gray-500');
-      document.getElementById('contenidoNueva').classList.add('hidden');
-      document.getElementById('contenidoGestionar').classList.remove('hidden');
-      cargarPropiedades();
     }
+  } else {
+    document.getElementById('tabGestionar').classList.add('tab-active');
+    document.getElementById('tabNueva').classList.add('text-gray-500');
+    document.getElementById('contenidoNueva').classList.add('hidden');
+    document.getElementById('contenidoGestionar').classList.remove('hidden');
+    cargarPropiedades();
   }
+}
 
   function cargarPropiedades() {
     fetch(`${API_URL}?path=propiedades/todas`)
