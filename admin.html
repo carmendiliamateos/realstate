@@ -135,38 +135,74 @@
           </select>
         </div>
 
-        <div class="space-y-4">
-          <label class="block text-sm uppercase tracking-widest mb-2 text-black font-bold">Fotos del Inmueble (Toque para subir)</label>
+      <div class="space-y-4">
+        <label class="block text-sm uppercase tracking-widest mb-2 text-black font-bold">Fotos del Inmueble (Hasta 10 fotos)</label>
+        
+        <div class="grid grid-cols-1 gap-4">
+          <input type="file" id="file1" accept="image/*" class="hidden" onchange="actualizarUIFoto(1)">
+          <label for="file1" id="label1" 
+                 class="w-full h-64 flex flex-col items-center justify-center bg-white border-2 border-black border-dashed rounded-[2rem] cursor-pointer overflow-hidden transition-all">
+            <span class="material-symbols-outlined text-black text-4xl mb-2">add_a_photo</span>
+            <span class="text-black font-bold text-sm">Foto Principal</span>
+          </label>
           
-          <div class="grid grid-cols-1 gap-4">
-            <input type="file" id="file1" accept="image/*" class="hidden" onchange="actualizarUIFoto(1)">
-            <label for="file1" id="label1" 
-                   class="w-full h-64 flex flex-col items-center justify-center bg-white border-2 border-black border-dashed rounded-[2rem] cursor-pointer overflow-hidden transition-all">
-              <span class="material-symbols-outlined text-black text-4xl mb-2">add_a_photo</span>
-              <span class="text-black font-bold text-sm">Foto Principal</span>
+          <div class="grid grid-cols-3 gap-4">
+            <input type="file" id="file2" accept="image/*" class="hidden" onchange="actualizarUIFoto(2)">
+            <label for="file2" id="label2" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
             </label>
-            
-            <div class="grid grid-cols-3 gap-4">
-              <input type="file" id="file2" accept="image/*" class="hidden" onchange="actualizarUIFoto(2)">
-              <label for="file2" id="label2" 
-                     class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
-                <span class="material-symbols-outlined text-black">image</span>
-              </label>
-
-              <input type="file" id="file3" accept="image/*" class="hidden" onchange="actualizarUIFoto(3)">
-              <label for="file3" id="label3" 
-                     class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
-                <span class="material-symbols-outlined text-black">image</span>
-              </label>
-
-              <input type="file" id="file4" accept="image/*" class="hidden" onchange="actualizarUIFoto(4)">
-              <label for="file4" id="label4" 
-                     class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
-                <span class="material-symbols-outlined text-black">image</span>
-              </label>
-            </div>
+      
+            <input type="file" id="file3" accept="image/*" class="hidden" onchange="actualizarUIFoto(3)">
+            <label for="file3" id="label3" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
+      
+            <input type="file" id="file4" accept="image/*" class="hidden" onchange="actualizarUIFoto(4)">
+            <label for="file4" id="label4" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
+      
+            <input type="file" id="file5" accept="image/*" class="hidden" onchange="actualizarUIFoto(5)">
+            <label for="file5" id="label5" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
+      
+            <input type="file" id="file6" accept="image/*" class="hidden" onchange="actualizarUIFoto(6)">
+            <label for="file6" id="label6" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
+      
+            <input type="file" id="file7" accept="image/*" class="hidden" onchange="actualizarUIFoto(7)">
+            <label for="file7" id="label7" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
+      
+            <input type="file" id="file8" accept="image/*" class="hidden" onchange="actualizarUIFoto(8)">
+            <label for="file8" id="label8" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
+      
+            <input type="file" id="file9" accept="image/*" class="hidden" onchange="actualizarUIFoto(9)">
+            <label for="file9" id="label9" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
+      
+            <input type="file" id="file10" accept="image/*" class="hidden" onchange="actualizarUIFoto(10)">
+            <label for="file10" id="label10" 
+                   class="h-32 flex items-center justify-center bg-white border-2 border-black border-dashed rounded-2xl cursor-pointer overflow-hidden">
+              <span class="material-symbols-outlined text-black">image</span>
+            </label>
           </div>
         </div>
+      </div>
 
         <button type="submit" id="btnPublicar" 
                 class="w-full bg-[#C49A6C] text-white py-6 rounded-[2rem] font-bold text-xl shadow-2xl hover:bg-[#b38a5d] active:scale-[0.98] transition-all flex items-center justify-center gap-3 mt-8">
@@ -321,11 +357,17 @@ function editarPropiedad(id) {
           imagen1: p.imagen1 || '',
           imagen2: p.imagen2 || '',
           imagen3: p.imagen3 || '',
-          imagen4: p.imagen4 || ''
+          imagen4: p.imagen4 || '',
+          imagen5: p.imagen5 || '',
+          imagen6: p.imagen6 || '',
+          imagen7: p.imagen7 || '',
+          imagen8: p.imagen8 || '',
+          imagen9: p.imagen9 || '',
+          imagen10: p.imagen10 || ''
         };
         
         // Mostrar previews de imágenes
-        [1, 2, 3, 4].forEach(i => {
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(i => {
           const img = p['imagen' + i];
           if (img) {
             const label = document.getElementById('label' + i);
@@ -391,7 +433,7 @@ function editarPropiedad(id) {
     document.getElementById('propiedadForm').reset();
     document.getElementById('textoBtn').textContent = 'Publicar Inmueble';
     
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 10; i++) {
       const label = document.getElementById('label' + i);
       label.innerHTML = i === 1 
         ? '<span class="material-symbols-outlined text-black text-4xl mb-2">add_a_photo</span><span class="text-black font-bold text-sm">Foto Principal</span>'
@@ -512,7 +554,7 @@ function editarPropiedad(id) {
 
       const promesasSubida = [];
       
-      for (let i = 1; i <= 4; i++) {
+      for (let i = 1; i <= 10; i++) {
         const input = document.getElementById('file' + i);
         if (input && input.files.length > 0) {
           const proceso = (async (index) => {
